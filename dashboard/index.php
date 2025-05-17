@@ -137,6 +137,39 @@
         </div>
       </div>
 
+      <div class="table-btm-container">
+        <div class="table-header">
+            <div class="table-title">
+              <div class="table-label" id="table_label">History</div>
+              <div hidden id="location_ref2"></div>
+            </div>
+            <div class="table-search">
+              <button class="btn-export">Export Data</button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table id="sensorDatatable2" class="table-content">
+              <thead>
+                <tr>
+                  <th>Temperature <button class="sort-btn2" data-column="0"><span class="sort-icon">&#9650;</span><span class="sort-icon">&#9660;</span></button></th>
+                  <th>Humidity <button class="sort-btn2" data-column="0"><span class="sort-icon">&#9650;</span><span class="sort-icon">&#9660;</span></button></th>
+                  <th>PM 2.5 <button class="sort-btn2" data-column="0"><span class="sort-icon">&#9650;</span><span class="sort-icon">&#9660;</span></button></th>
+                  <th>PM 10 <button class="sort-btn2" data-column="0"><span class="sort-icon">&#9650;</span><span class="sort-icon">&#9660;</span></button></th>
+                  <th>Timestamp <button class="sort-btn2" data-column="0"><span class="sort-icon">&#9650;</span><span class="sort-icon">&#9660;</span></button></th>
+                </tr>
+              </thead>
+
+              <tbody id="sensor-data2">
+              </tbody>
+            </table>
+            <div id="pagination2">
+                <button id="prevBtn2">Prev</button>
+                <span id="pageNumbers2">1</span>
+                <button id="nextBtn2">Next</button>
+            </div>
+          </div>
+      </div>
+
     </div>
 
   </div>
@@ -151,6 +184,7 @@
 <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
 <?php include("script_table.php"); ?>
+<?php include("script_table2.php"); ?>
 <?php include("script_map.php"); ?>
 
 <!-- Fetch Sidebar Site Locations -->
@@ -178,6 +212,7 @@
           const formattedFirstArea = firstArea.toLowerCase().replace(/\s+/g, '');
           $('#table_label').text(firstArea);
           $('#location_ref').text(formattedFirstArea);
+          $('#location_ref2').text(formattedFirstArea);
           // console.log('Selected area1:', formattedFirstArea);
           
           displaySensorDatas(formattedFirstArea);
@@ -197,14 +232,17 @@
           // Update table label and location reference
           $('#table_label').text(selectedArea); // Show the name, e.g., "Lamp 1"
           $('#location_ref').text(formattedArea); // Hidden value, e.g., "lamp1"
+          $('#location_ref2').text(formattedArea); // Hidden value, e.g., "lamp1"
 
           displaySensorDatas(formattedArea);
           displayFootTraffic(formattedArea);
           goToMarker(selectedArea);
           loadTableData();
+          loadTableData2();
         });
         
         loadTableData();
+        loadTableData2();
       },
       error: function(xhr, status, error) {
         console.error('AJAX Error:', status, error);

@@ -3,19 +3,19 @@
 <script>
 $(document).ready(function() {
   // console.log("Loading Table Data");
-  loadTableData();
+  loadTableData2();
   
   // Event delegation for sort buttons
-  $(document).on('click', '.sort-btn', function() {
+  $(document).on('click', '.sort-btn2', function() {
     const column = $(this).data('column');
     const isAscending = $(this).hasClass('asc');
-    sortTable(column, !isAscending);
+    sortTable2(column, !isAscending);
     $(this).toggleClass('asc', !isAscending);
   });
 });
 
-function sortTable(column, ascending) {
-  const rows = $('#sensor-data tr').get();
+function sortTable2(column, ascending) {
+  const rows = $('#sensor-data2 tr').get();
 
   rows.sort((a, b) => {
     const cellA = $(a).children('td').eq(column).text();
@@ -32,34 +32,34 @@ function sortTable(column, ascending) {
   });
 
   $.each(rows, function(index, row) {
-    $('#sensor-data').append(row);
+    $('#sensor-data2').append(row);
   });
 
-  paginationFunction(); // Reapply pagination after sorting
+  paginationFunction2(); // Reapply pagination after sorting
 }
 
-$(document).on('keyup', '#searchInputTable', function() {
+$(document).on('keyup', '#searchInputTable2', function() {
   var value = $(this).val().toLowerCase();
 
   if (value) {
-    $('#sensor-data tr').filter(function() {
+    $('#sensor-data2 tr').filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
   } else {
-    $('#sensor-data tr').show();
-    paginationFunction();
+    $('#sensor-data2 tr').show();
+    paginationFunction2();
   }
 });
 
-function loadTableData() {
-  // console.log("TRYING TO LOAD TABLE");
-  let lamp_location = $('#location_ref').text();
-  console.log("lamp location 1: " + lamp_location);
+function loadTableData2() {
+  console.log("TRYING TO LOAD TABLE2");
+  let lamp_location2 = $('#location_ref').text();
+  console.log("This is lamp location table 2: " + lamp_location2)
   $.ajax({
-    url: "fetch_table_data.php",
+    url: "fetch_table_data2.php",
     method: "GET",
     dataType: "json",
-    data: { lamp_location: lamp_location },
+    data: { lamp_location: lamp_location2 },
     success: function(data) {
       var rows = '';
       if (data.length === 0) {
@@ -67,42 +67,45 @@ function loadTableData() {
       } else {
         $.each(data, function(index, value) {
           rows += '<tr>';
+          rows += '<td>' + value.temperature + '</td>';
+          rows += '<td>' + value.humidity + '</td>';
+          rows += '<td>' + value.pm25 + '</td>';
+          rows += '<td>' + value.pm10 + '</td>';
           rows += '<td>' + value.timestamp + '</td>';
-          rows += '<td>' + value.status + '</td>';
           rows += '</tr>';
         });
-        $('#sensor-data').html(rows);
+        $('#sensor-data2').html(rows);
       }
 
-      paginationFunction();
+      paginationFunction2();
     },
     error: function(err) {
-      $('#sensor-data').html('<tr><td colspan="2">Error fetching data</td></tr>');
+      $('#sensor-data2').html('<tr><td colspan="2">Error fetching data</td></tr>');
       console.error("Fetch error:", err);
     }
   });
 }
 
 
-function hideColumns() {
-  // Hide the first 3 columns (Sensor ID, Temp, RH)
-  $('.col-sensor-id, .col-temp, .col-sd').hide(); // Hide the header cells
+// function hideColumns() {
+//   // Hide the first 3 columns (Sensor ID, Temp, RH)
+//   $('.col-sensor-id, .col-temp, .col-sd').hide(); // Hide the header cells
 
-  $('#sensor-data tr').each(function() {
-    $(this).find('td').eq(0).hide(); // Hide Sensor ID column
-    $(this).find('td').eq(1).hide(); // Hide Temp column
-    $(this).find('td').eq(3).hide(); // Hide RH column
-  });
-}
+//   $('#sensor-data tr').each(function() {
+//     $(this).find('td').eq(0).hide(); // Hide Sensor ID column
+//     $(this).find('td').eq(1).hide(); // Hide Temp column
+//     $(this).find('td').eq(3).hide(); // Hide RH column
+//   });
+// }
 
-function paginationFunction() {
-  const rowsPerPage = 20;
-  const table = document.getElementById('sensorDatatable').getElementsByTagName('tbody')[0];
+function paginationFunction2() {
+  const rowsPerPage = 5;
+  const table = document.getElementById('sensorDatatable2').getElementsByTagName('tbody')[0];
   const rows = table.getElementsByTagName('tr');
-  const pagination = document.getElementById('pagination');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const pageNumbers = document.getElementById('pageNumbers');
+  const pagination2 = document.getElementById('pagination2');
+  const prevBtn = document.getElementById('prevBtn2');
+  const nextBtn = document.getElementById('nextBtn2');
+  const pageNumbers = document.getElementById('pageNumbers2');
   
   let currentPage = 1;
   let totalPages = Math.ceil(rows.length / rowsPerPage);
@@ -116,10 +119,10 @@ function paginationFunction() {
       for (let i = start; i < end && i < rows.length; i++) {
           rows[i].style.display = '';
       }
-      updatePagination();
+      updatePagination2();
   }
 
-  function updatePagination() {
+  function updatePagination2() {
       pageNumbers.innerHTML = `Page ${currentPage} of ${totalPages}`;
       prevBtn.disabled = currentPage === 1;
       nextBtn.disabled = currentPage === totalPages;

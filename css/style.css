@@ -190,11 +190,12 @@ body {
   /* max-width: 200px; */
   /* display: flex;
   flex-direction: column;*/
-  height: 100vh; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+  height: 100vh; 
+  overflow-y: auto; /* optional if sidebar also needs scroll */
 }
 .sidebar-flex1 {
   width: 100%;
@@ -366,6 +367,7 @@ body {
   justify-content: space-evenly;
   /* background-color: var(--color-background-content); */
   /* gap: 20px; */
+  overflow-y: auto;
 }
 .top-container {
   display: flex;
@@ -424,6 +426,7 @@ body {
   background-color: var(--color-card-color);
   box-shadow: 3px 3px 10px 1px rgba(22, 22, 22, 0.5);
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 .table-header {
   display: flex;
@@ -445,7 +448,7 @@ body {
 #sensor-data tr:hover {
   background-color: var(--color-background-content);
 }
-.sort-btn {
+.sort-btn, .sort-btn2 {
   border: none;
   background: none;
   cursor: pointer;
@@ -526,22 +529,25 @@ body {
   background-color: #919191;
   color: white;
 }
-#pagination {
+#pagination, #pagination2 {
   margin-top: 10px;
   text-align: center;
   float: right;
 }
-#pagination button {
+#pagination button, #pagination2 button, .btn-export {
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
   color: #FFFFFF;
   background-color: var(--color-background-content);
 }
-#pagination button:hover {
+#pagination button:hover,
+#pagination2 button:hover,
+.btn-export:hover {
   color: var(--color-card-color);
 }
-#pagination span {
+#pagination span,
+#pagination2 span {
   margin: 0 5px;
   color: #FFFFFF;
 }
@@ -624,6 +630,15 @@ body {
   border-radius: 10px;
 }
 /* water-level END */
+
+
+.table-btm-container {
+  background-color: var(--color-card-color);
+  color: var(--color-font-color);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+}
 
 /* CONTENT END */
 
